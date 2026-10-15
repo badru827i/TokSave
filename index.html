@@ -21,17 +21,46 @@ button{font:inherit;cursor:pointer;border:0}.start{width:100%;padding:16px 20px;
 <main><section class="intro"><h1>Uji internet anda.<br><span>Ketahui kelajuannya.</span></h1><p>Latensi web, download dan upload — dalam satu ujian sekitar 15 saat.</p></section>
 <section class="card" aria-label="Internet speed test"><div class="gauge-wrap"><div class="gauge" id="gauge"><div class="gauge-inner"><div class="phase" id="phase">SEDIA</div><div class="number" id="current">—</div><div class="unit" id="currentUnit">Mbps</div></div></div></div>
 <div class="metrics"><div class="metric"><div class="label">LATENSI WEB</div><div class="value" id="ping">— <span class="unit-small">ms</span></div></div><div class="metric"><div class="label">DOWNLOAD</div><div class="value" id="download">— <span class="unit-small">Mbps</span></div></div><div class="metric"><div class="label">UPLOAD</div><div class="value" id="upload">— <span class="unit-small">Mbps</span></div></div></div>
-<button class="start" id="start">Mula Ujian</button><div class="status" id="status" role="status">Tekan butang untuk mula menguji sambungan.</div><p class="note">Ujian menggunakan data internet sebenar. Ujian pelayar mengukur latensi HTTP, bukan ping ICMP. Kelajuan dipengaruhi rangkaian, pelayan dan data yang digunakan.</p>
-<div class="details"><span><i class="dot"></i>Ujian melalui Cloudflare</span><span id="server">Pelayan ujian: belum disambungkan</span></div></section></main>
+<button class="start" id="start">Mula Ujian</button><div class="status" id="status" role="status">Tekan butang untuk mula menguji sambungan.</div><p class="note">Ujian menggunakan data internet sebenar. Menggunakan enjin pengukuran Cloudflare. Keputusan masih dipengaruhi rangkaian, laluan pelayan dan peranti.</p>
+<div class="details"><span><i class="dot"></i>Enjin Cloudflare</span><span id="server">Pelayan ujian: belum disambungkan</span></div></section></main>
 <footer>AI-FUSION Speed Test · UI 1.0 · Keputusan ialah anggaran dan bukan jaminan kelajuan ISP.</footer>
-<script>
-const $=id=>document.getElementById(id);let running=false;
+<script type="module">
+import SpeedTest from 'https://esm.sh/@cloudflare/speedtest';
+const $=id=>document.getElementById(id);let running=false,engine=null;
 function setGauge(v){const angle=Math.max(0,Math.min(280,(Math.log10(Math.max(v,.1)+1)/Math.log10(1001))*280));$('gauge').style.setProperty('--angle',angle+'deg')}
-function showMetric(id,v,unit){$(id).innerHTML=(Number.isFinite(v)?(v<10?v.toFixed(2):v.toFixed(1)):'—')+' <span class="unit-small">'+unit+'</span>'}
-function wait(ms){return new Promise(r=>setTimeout(r,ms))}
-async function timedFetch(url,opts={}){const t=performance.now();const res=await fetch(url,{cache:'no-store',...opts});if(!res.ok)throw new Error('Ujian rangkaian gagal ('+res.status+')');return {res,ms:performance.now()-t}}
-async function pingTest(){const vals=[];const warm=await timedFetch('https://speed.cloudflare.com/__down?bytes=1000&warmup='+Date.now());await warm.res.arrayBuffer();for(let i=0;i<7;i++){const x=await timedFetch('https://speed.cloudflare.com/__down?bytes=1000&ping='+Date.now()+'_'+i);await x.res.arrayBuffer();vals.push(x.ms);$('status').textContent='Mengukur latensi web… '+(i+1)+'/7'}vals.sort((a,b)=>a-b);return {median:vals[Math.floor(vals.length/2)],jitter:vals.slice(1).reduce((s,v,i)=>s+Math.abs(v-vals[i]),0)/(vals.length-1)}}
-async function downloadTest(){const duration=5000,start=performance.now();let total=0,completed=0;const worker=async(id)=>{while(performance.now()-start<duration){const x=await timedFetch('https://speed.cloudflare.com/__down?bytes=5000000&dl='+Date.now()+'_'+id+'_'+completed);const b=await x.res.arrayBuffer();total+=b.byteLength;completed++;const elapsed=Math.max((performance.now()-start)/1000,.001);const mbps=total*8/elapsed/1e6;$('current').textContent=mbps.toFixed(1);$('currentUnit').textContent='Mbps';setGauge(mbps);$('status').textContent='Mengukur download… '+Math.min(100,Math.round((performance.now()-start)/duration*100))+'%'}};await Promise.all([worker(1),worker(2),worker(3),worker(4)]);return total*8/((performance.now()-start)/1000)/1e6}
-async function uploadTest(){const duration=5000,start=performance.now();let total=0,completed=0;const body=new Blob([new Uint8Array(1000000)]);const worker=async(id)=>{while(performance.now()-start<duration){const x=await timedFetch('https://speed.cloudflare.com/__up?ul='+Date.now()+'_'+id+'_'+completed,{method:'POST',body,headers:{'Content-Type':'application/octet-stream'}});await x.res.arrayBuffer();total+=body.size;completed++;const elapsed=Math.max((performance.now()-start)/1000,.001);const mbps=total*8/elapsed/1e6;$('current').textContent=mbps.toFixed(1);$('currentUnit').textContent='Mbps';setGauge(mbps);$('status').textContent='Mengukur upload… '+Math.min(100,Math.round((performance.now()-start)/duration*100))+'%'}};await Promise.all([worker(1),worker(2),worker(3)]);return total*8/((performance.now()-start)/1000)/1e6}
-$('start').addEventListener('click',async()=>{if(running)return;running=true;$('start').disabled=true;$('start').textContent='Sedang menguji…';$('phase').textContent='MULA';$('current').textContent='…';$('status').textContent='Menyambung ke pelayan ujian…';$('server').textContent='Pelayan ujian: Cloudflare';try{const p=await pingTest();showMetric('ping',p.median,'ms');$('status').textContent='Latensi web median: '+p.median.toFixed(1)+' ms · jitter: '+p.jitter.toFixed(1)+' ms';$('phase').textContent='DOWNLOAD';const d=await downloadTest();showMetric('download',d,'Mbps');$('phase').textContent='UPLOAD';const u=await uploadTest();showMetric('upload',u,'Mbps');$('phase').textContent='SIAP';$('current').textContent=d.toFixed(1);$('currentUnit').textContent='Mbps';setGauge(d);$('status').textContent='Ujian selesai! Jalankan semula untuk keputusan baharu.'}catch(e){$('phase').textContent='RALAT';$('current').textContent='—';$('status').textContent='Ujian tidak berjaya: '+(e.message||'Semak sambungan internet dan cuba lagi.');$('server').textContent='Semak sambungan atau sekatan rangkaian';}finally{$('start').disabled=false;$('start').textContent='Uji Semula';running=false}});
+function showMetric(id,v,unit){$(id).innerHTML=(Number.isFinite(v)&&v>=0?(v<10?v.toFixed(2):v.toFixed(1)):'—')+' <span class="unit-small">'+unit+'</span>'}
+function finishUI(){running=false;$('start').disabled=false;$('start').textContent='Uji Semula'}
+function fail(message){$('phase').textContent='RALAT';$('status').textContent='Ujian gagal: '+message;$('server').textContent='Pelayan ujian: Cloudflare';finishUI()}
+$('start').addEventListener('click',()=>{
+ if(running)return;
+ running=true;$('start').disabled=true;$('start').textContent='Sedang menguji…';$('phase').textContent='LATENSI';$('current').textContent='…';$('currentUnit').textContent='Mbps';$('status').textContent='Memulakan enjin pengukuran Cloudflare…';$('server').textContent='Pelayan ujian: Cloudflare';
+ try{
+  engine=new SpeedTest({autoStart:false,measureDownloadLoadedLatency:true,measureUploadLoadedLatency:true,measurements:[
+   {type:'latency',numPackets:7},
+   {type:'download',bytes:1000000,count:2},
+   {type:'download',bytes:10000000,count:2},
+   {type:'download',bytes:25000000,count:1},
+   {type:'upload',bytes:1000000,count:2},
+   {type:'upload',bytes:10000000,count:1}
+  ]});
+  engine.onResultsChange=event=>{
+   const type=event&&event.type||'';
+   if(type==='latency'){$('phase').textContent='LATENSI';$('status').textContent='Mengukur latensi menggunakan bacaan berulang…'}
+   else if(type==='download'){$('phase').textContent='DOWNLOAD';$('status').textContent='Mengukur download dengan saiz data berbeza…'}
+   else if(type==='upload'){$('phase').textContent='UPLOAD';$('status').textContent='Mengukur upload dengan saiz data berbeza…'}
+   try{const d=engine.results.getDownloadBandwidth()/1e6;if(Number.isFinite(d)&&d>0){$('current').textContent=d.toFixed(1);setGauge(d)}}catch{}
+  };
+  engine.onFinish=results=>{
+   const latency=results.getUnloadedLatency();
+   const down=results.getDownloadBandwidth()/1e6;
+   const up=results.getUploadBandwidth()/1e6;
+   showMetric('ping',latency,'ms');showMetric('download',down,'Mbps');showMetric('upload',up,'Mbps');
+   $('phase').textContent='SIAP';$('current').textContent=Number.isFinite(down)?down.toFixed(1):'—';$('currentUnit').textContent='Mbps';if(Number.isFinite(down))setGauge(down);
+   $('status').textContent='Ujian selesai menggunakan enjin rasmi Cloudflare. Masa sebenar bergantung pada rangkaian.';
+   finishUI();
+  };
+  engine.onError=err=>fail(typeof err==='string'?err:'Sambungan ke pelayan ujian terganggu.');
+  engine.play();
+ }catch(e){fail(e&&e.message?e.message:'Tidak dapat memulakan enjin ujian.')}
+});
 </script></body></html>
