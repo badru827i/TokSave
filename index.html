@@ -18,10 +18,10 @@ button{font:inherit;cursor:pointer;border:0}.start{width:100%;padding:16px 20px;
 </head>
 <body>
 <header><div class="brand"><div class="logo">F</div><div>AI-FUSION<br><span style="font-size:12px;color:var(--muted);font-weight:600">SPEED TEST</span></div></div><div class="tag">BETA · WEB</div></header>
-<main><section class="intro"><h1>Uji internet anda.<br><span>Ketahui kelajuannya.</span></h1><p>Ping, download dan upload — dalam satu ujian ringkas.</p></section>
+<main><section class="intro"><h1>Uji internet anda.<br><span>Ketahui kelajuannya.</span></h1><p>Latensi web, download dan upload — dalam satu ujian sekitar 15 saat.</p></section>
 <section class="card" aria-label="Internet speed test"><div class="gauge-wrap"><div class="gauge" id="gauge"><div class="gauge-inner"><div class="phase" id="phase">SEDIA</div><div class="number" id="current">—</div><div class="unit" id="currentUnit">Mbps</div></div></div></div>
-<div class="metrics"><div class="metric"><div class="label">PING</div><div class="value" id="ping">— <span class="unit-small">ms</span></div></div><div class="metric"><div class="label">DOWNLOAD</div><div class="value" id="download">— <span class="unit-small">Mbps</span></div></div><div class="metric"><div class="label">UPLOAD</div><div class="value" id="upload">— <span class="unit-small">Mbps</span></div></div></div>
-<button class="start" id="start">Mula Ujian</button><div class="status" id="status" role="status">Tekan butang untuk mula menguji sambungan.</div><p class="note">Ujian menggunakan data internet sebenar. Keputusan dipengaruhi rangkaian, pelayan dan peranti.</p>
+<div class="metrics"><div class="metric"><div class="label">LATENSI WEB</div><div class="value" id="ping">— <span class="unit-small">ms</span></div></div><div class="metric"><div class="label">DOWNLOAD</div><div class="value" id="download">— <span class="unit-small">Mbps</span></div></div><div class="metric"><div class="label">UPLOAD</div><div class="value" id="upload">— <span class="unit-small">Mbps</span></div></div></div>
+<button class="start" id="start">Mula Ujian</button><div class="status" id="status" role="status">Tekan butang untuk mula menguji sambungan.</div><p class="note">Ujian menggunakan data internet sebenar. Ujian pelayar mengukur latensi HTTP, bukan ping ICMP. Kelajuan dipengaruhi rangkaian, pelayan dan data yang digunakan.</p>
 <div class="details"><span><i class="dot"></i>Ujian melalui Cloudflare</span><span id="server">Pelayan ujian: belum disambungkan</span></div></section></main>
 <footer>AI-FUSION Speed Test · UI 1.0 · Keputusan ialah anggaran dan bukan jaminan kelajuan ISP.</footer>
 <script>
