@@ -1,22 +1,19 @@
-# AI-FUSION Speed Test
+# TokSave
 
-Lightweight, responsive browser-based internet speed test prototype.
+A lightweight, mobile-friendly TikTok link checker and downloader interface.
 
-## Features
-- Ping/latency estimate (median of five small requests)
-- Download and upload throughput estimates
-- Mobile-friendly dark UI
-- Uses Cloudflare's public speed-test endpoint; a test consumes mobile data
+## Current features
+- Responsive white-and-green layout
+- Paste a public TikTok link and validate its URL format
+- Simple usage instructions and FAQ
+
+## Important
+This repository currently contains a static frontend. Actual video processing and file downloads are **not enabled yet**; a suitable backend/API must be connected before the page can retrieve video files. Do not put private API keys in browser-side code.
 
 ## Publish with GitHub Pages
-**One-time setup is required by the repository owner.** The GitHub Actions token cannot enable a Pages site when it has not been enabled for the repository yet.
-
 1. Open **Settings → Pages**.
-2. Under **Build and deployment → Source**, select **GitHub Actions** and save if prompted.
-3. Open **Actions → Deploy to GitHub Pages** and select **Run workflow** on branch `main`.
-4. When deployment succeeds, open the Pages URL shown in the workflow run or in **Settings → Pages**.
+2. Select **GitHub Actions** as the build and deployment source.
+3. Open **Actions → Deploy to GitHub Pages** and confirm the workflow succeeds.
+4. The usual project site URL is `https://badru827i.github.io/TokSave/`.
 
-After Pages has been enabled, pushes to `main` will trigger deployment automatically.
-
-## Notes
-This is a prototype, not a certified ISP benchmark. Results vary with signal quality, Wi-Fi, device load, server route and browser restrictions. Do not treat results as a guaranteed speed claim. A speed test uses real internet data.
+Only download content you own or have permission to save, and respect creators' rights and platform terms.
