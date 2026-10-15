@@ -1,109 +1,64 @@
 <!doctype html>
 <html lang="ms">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#080d18"><meta name="description" content="AI-FUSION Speed Test — uji ping, download dan upload internet anda.">
-<title>AI-FUSION Speed Test</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="AI-FUSION Downloader — tampal pautan video TikTok untuk menyediakan muat turun dengan mudah.">
+<title>AI-FUSION Downloader — Video Saver</title>
 <style>
-:root{color-scheme:dark;--bg:#080d18;--panel:#101a2b;--line:#24344c;--text:#f3f7ff;--muted:#93a4bd;--cyan:#55e6ff;--blue:#6887ff;--green:#5af0b1}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -10%,#1d3561 0,transparent 48%),var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;display:flex;flex-direction:column}
-header{width:min(100% - 32px,980px);margin:0 auto;padding:26px 0;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.4px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--cyan),var(--blue));display:grid;place-items:center;color:#06101c;font-weight:950;font-size:21px;box-shadow:0 0 28px #55e6ff35}.tag{color:var(--muted);font-size:12px;border:1px solid var(--line);padding:6px 10px;border-radius:999px}
-main{width:min(100% - 32px,820px);margin:auto;flex:1;display:flex;flex-direction:column;justify-content:center;padding:20px 0 48px}.intro{text-align:center;margin-bottom:28px}.intro h1{font-size:clamp(30px,6vw,48px);line-height:1.08;margin:0 0 12px;letter-spacing:-1.5px}.intro h1 span{background:linear-gradient(90deg,var(--cyan),#a4b4ff);background-clip:text;color:transparent}.intro p{color:var(--muted);margin:0}
-.card{border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,#111d30ed,#0c1423f2);padding:clamp(20px,5vw,38px);box-shadow:0 24px 80px #0005}
-.gauge-wrap{display:flex;justify-content:center;margin:4px 0 24px}.gauge{width:230px;height:230px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(from 220deg,var(--cyan) 0deg,var(--blue) var(--angle,0deg),#24334a var(--angle,0deg),#24334a 280deg,transparent 280deg);transition:background .25s}.gauge:before{content:"";position:absolute;inset:9px;border-radius:50%;background:#0c1423}.gauge-inner{position:relative;text-align:center}.number{font-size:clamp(42px,10vw,58px);font-weight:800;letter-spacing:-2px;line-height:1.1;font-variant-numeric:tabular-nums}.unit{color:var(--muted);font-size:14px}.phase{color:var(--cyan);font-size:13px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px}
-.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 24px}.metric{border:1px solid var(--line);border-radius:18px;padding:16px 12px;text-align:center;background:#ffffff03}.metric .label{font-size:12px;color:var(--muted);margin-bottom:6px}.metric .value{font-size:clamp(20px,4vw,28px);font-weight:750;font-variant-numeric:tabular-nums}.metric .unit-small{font-size:12px;color:var(--muted);font-weight:500}
-button{font:inherit;cursor:pointer;border:0}.start{width:100%;padding:16px 20px;border-radius:16px;color:#06101c;background:linear-gradient(100deg,var(--cyan),#92b2ff);font-weight:850;font-size:17px;box-shadow:0 8px 28px #55e6ff20;transition:transform .2s,opacity .2s}.start:hover{transform:translateY(-1px)}.start:disabled{opacity:.55;cursor:wait;transform:none}.note{font-size:12px;color:var(--muted);text-align:center;margin:14px 0 0}.status{font-size:13px;color:var(--muted);text-align:center;min-height:22px;margin-top:12px}.details{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:16px;margin-top:22px;color:var(--muted);font-size:12px}.dot{display:inline-block;width:7px;height:7px;background:var(--green);border-radius:50%;margin-right:7px}footer{padding:20px;text-align:center;color:#73839b;font-size:12px}
-@media(max-width:520px){header{padding:18px 0}.tag{font-size:10px}.metrics{gap:7px}.metric{padding:13px 5px;border-radius:14px}.gauge{width:205px;height:205px}.card{border-radius:23px}}
-.netlive{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.netlive>div{padding:10px;border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;gap:5px}.netlive strong{font-size:13px;font-variant-numeric:tabular-nums}.realtime{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:18px;background:#ffffff03}.livehead{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-bottom:15px;border-bottom:1px solid var(--line)}.smallcap{font-size:10px;letter-spacing:1.2px;color:var(--muted);font-weight:800}.clock{font-size:clamp(28px,7vw,38px);font-weight:850;letter-spacing:1px;font-variant-numeric:tabular-nums;line-height:1.2}.muted{color:var(--muted);font-size:12px}.livebadge{display:flex;align-items:center;gap:7px;color:var(--green);font-size:11px;font-weight:800;letter-spacing:1px;border:1px solid #5af0b133;border-radius:999px;padding:7px 10px}.livepulse{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px #5af0b1;animation:pulse 1.4s infinite}@keyframes pulse{50%{opacity:.35}}.wsheading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:17px 0 10px}.wsheading strong{font-size:15px}.wsstate{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 8px}.wslabel{display:block;font-size:12px;color:var(--muted);margin:10px 0 6px}.wsinput{width:100%;background:#080d18;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;font-size:14px;outline:none}.wsinput:focus{border-color:var(--cyan)}.wsbuttons{display:flex;gap:8px;margin-top:9px}.wsbutton{border:1px solid var(--line);border-radius:11px;padding:10px 14px;background:#18253a;color:var(--text);font-size:13px;font-weight:750}.wsbutton.primary{background:linear-gradient(100deg,var(--cyan),#92b2ff);color:#06101c;border:0}.wsbutton:disabled{opacity:.45;cursor:not-allowed}.wsinfo{font-size:12px;color:var(--muted);margin-top:10px;overflow-wrap:anywhere;min-height:18px}.wsstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.wsstats>div{padding:10px;border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;gap:5px}.wsstats strong{font-size:14px;font-variant-numeric:tabular-nums}.wsnote{font-size:11px;line-height:1.5;color:var(--muted);margin:12px 0 0}@media(max-width:520px){.realtime{padding:14px}.wsstats{gap:5px}.netlive{gap:5px}.netlive>div{padding:8px 6px}.netlive strong{font-size:11px}.wsstats>div{padding:8px 6px}.wsstats strong{font-size:12px}.wsstate{font-size:10px}}</style>
+:root{color-scheme:light;--green:#18a979;--green-dark:#087f5b;--ink:#17211e;--muted:#687570;--line:#e4ebe7;--soft:#f3faf6;--white:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fff;color:var(--ink);font:16px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit;text-decoration:none}.wrap{width:min(100% - 36px,1040px);margin:auto}
+header{height:76px;border-bottom:1px solid #edf1ee;background:#ffffffed;display:flex;align-items:center;position:sticky;top:0;z-index:10;backdrop-filter:blur(12px)}.nav{display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:10px;font-weight:850;font-size:20px;letter-spacing:-.6px}.logo{width:39px;height:39px;border-radius:13px;background:var(--green);display:grid;place-items:center;color:white;font-size:22px;font-weight:900;box-shadow:0 7px 18px #18a97930}.brand small{display:block;font-size:10px;letter-spacing:1.6px;color:var(--muted);line-height:1.1;margin-top:2px}.navlinks{display:flex;align-items:center;gap:25px;font-size:14px;color:#46534e}.navlinks a:hover{color:var(--green-dark)}.navpill{border:1px solid var(--line);padding:8px 13px;border-radius:999px;font-weight:700}
+main{overflow:hidden}.hero{padding:68px 0 42px;text-align:center;background:radial-gradient(ellipse at 50% 0%,#dff8eb 0%,#f6fcf8 42%,#fff 76%)}.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#e6f8ef;color:#087f5b;border:1px solid #d0f0df;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:800;letter-spacing:.4px}.eyedot{width:7px;height:7px;border-radius:50%;background:var(--green)}h1{font-size:clamp(34px,6.2vw,60px);letter-spacing:-2.6px;line-height:1.07;margin:20px auto 16px;max-width:780px;font-weight:850}h1 span{color:var(--green-dark)}.sub{max-width:620px;margin:0 auto;color:var(--muted);font-size:17px}.download-card{max-width:760px;margin:34px auto 0;padding:10px;background:#fff;border:1px solid #dfeae3;border-radius:20px;box-shadow:0 18px 55px #123e2810;display:flex;gap:8px;align-items:center}.linkicon{flex:none;width:43px;height:43px;border-radius:13px;background:var(--soft);display:grid;place-items:center;color:var(--green-dark);margin-left:5px}.linkicon svg{width:22px;height:22px}.urlinput{width:100%;min-width:0;border:0;outline:0;font:inherit;padding:13px 6px;color:var(--ink);background:transparent}.urlinput::placeholder{color:#98a49e}.paste{flex:none;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 15px;font:700 14px inherit;color:#4c5b54;cursor:pointer}.paste:hover{background:#f5faf7}.go{flex:none;border:0;border-radius:13px;padding:14px 21px;background:var(--green);color:white;font:800 15px inherit;cursor:pointer;box-shadow:0 7px 17px #18a97925;transition:transform .15s,background .15s}.go:hover{background:var(--green-dark);transform:translateY(-1px)}.privacy{display:flex;justify-content:center;align-items:center;gap:7px;color:#7a8781;font-size:12px;margin-top:15px}.privacy svg{width:14px;height:14px;color:var(--green-dark)}.result{display:none;text-align:left;max-width:760px;margin:14px auto 0;border:1px solid #dfeae3;background:#fff;border-radius:14px;padding:16px 18px;color:#43524b;font-size:14px}.result.show{display:block}.result strong{display:block;color:var(--ink);margin-bottom:4px}.result.error{border-color:#f2d4d4;background:#fffafa}.result a{color:var(--green-dark);text-decoration:underline}.features{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;max-width:850px;margin:43px auto 0;text-align:left}.feature{display:flex;gap:12px;align-items:flex-start;padding:15px;border:1px solid #e9f0eb;background:#ffffffb8;border-radius:15px}.feature-icon{flex:none;width:36px;height:36px;border-radius:11px;background:#e8f8ef;display:grid;place-items:center;color:var(--green-dark)}.feature-icon svg{width:19px;height:19px}.feature b{display:block;font-size:14px;margin:1px 0 3px}.feature p{font-size:12px;color:var(--muted);margin:0;line-height:1.45}
+.section{padding:64px 0}.section.soft{background:#f8fbf9}.section-head{text-align:center;margin-bottom:30px}.section-head h2{font-size:clamp(26px,4vw,38px);letter-spacing:-1.2px;line-height:1.2;margin:0 0 10px}.section-head p{color:var(--muted);margin:0}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.step{background:white;border:1px solid var(--line);border-radius:18px;padding:24px}.stepnum{width:40px;height:40px;border-radius:13px;background:#e7f8ef;color:var(--green-dark);font-weight:900;display:grid;place-items:center;margin-bottom:17px}.step h3{font-size:17px;margin:0 0 7px}.step p{color:var(--muted);font-size:14px;margin:0}.faq{max-width:760px;margin:auto}.faq details{border-bottom:1px solid var(--line);padding:18px 2px}.faq summary{font-weight:750;cursor:pointer}.faq details p{color:var(--muted);font-size:14px;margin:10px 0 0}
+footer{border-top:1px solid var(--line);padding:25px 0 30px;color:var(--muted);font-size:12px}.foot{display:flex;align-items:center;justify-content:space-between;gap:15px}.footbrand{font-weight:800;color:var(--ink);font-size:14px}
+@media(max-width:700px){header{height:66px}.navlinks{gap:10px}.navlinks a:not(.navpill){display:none}.hero{padding:48px 0 35px}h1{letter-spacing:-1.5px}.sub{font-size:15px}.download-card{display:grid;grid-template-columns:38px 1fr auto;gap:5px;padding:8px;border-radius:16px}.linkicon{width:36px;height:36px;margin-left:2px}.urlinput{grid-column:2/4;padding:8px 4px;font-size:14px}.paste{grid-column:1/2;grid-row:2;padding:10px 8px;font-size:12px}.go{grid-column:2/4;grid-row:2;padding:12px 10px}.features{grid-template-columns:1fr;gap:9px;margin-top:28px}.feature{padding:12px}.section{padding:48px 0}.steps{grid-template-columns:1fr;gap:12px}.step{padding:20px}.foot{flex-direction:column;text-align:center}.result{font-size:13px}}
+</style>
 </head>
 <body>
-<header><div class="brand"><div class="logo">F</div><div>AI-FUSION<br><span style="font-size:12px;color:var(--muted);font-weight:600">SPEED TEST</span></div></div><div class="tag">BETA · WEB</div></header>
-<main><section class="intro"><h1>Uji internet anda.<br><span>Ketahui kelajuannya.</span></h1><p>Latensi web, download dan upload — dalam satu ujian sekitar 15 saat.</p></section>
-<section class="card" aria-label="Internet speed test"><div class="gauge-wrap"><div class="gauge" id="gauge"><div class="gauge-inner"><div class="phase" id="phase">SEDIA</div><div class="number" id="current">—</div><div class="unit" id="currentUnit">Mbps</div></div></div></div>
-<div class="metrics"><div class="metric"><div class="label">LATENSI WEB</div><div class="value" id="ping">— <span class="unit-small">ms</span></div></div><div class="metric"><div class="label">DOWNLOAD</div><div class="value" id="download">— <span class="unit-small">Mbps</span></div></div><div class="metric"><div class="label">UPLOAD</div><div class="value" id="upload">— <span class="unit-small">Mbps</span></div></div></div>
-<button class="start" id="start">Mula Ujian</button><div class="status" id="status" role="status">Tekan butang untuk mula menguji sambungan.</div><p class="note">Ujian menggunakan data internet sebenar. Menggunakan enjin pengukuran Cloudflare. Keputusan masih dipengaruhi rangkaian, laluan pelayan dan peranti.</p>
-<div class="details"><span><i class="dot"></i>Enjin Cloudflare</span><span id="server">Pelayan ujian: belum disambungkan</span></div>
-<section class="realtime">
- <div class="livehead"><div><div class="smallcap">MASA MALAYSIA · UTC+8</div><div id="clock" class="clock">--:--:--.---</div><div id="date" class="muted">Memuatkan tarikh…</div><div class="muted">Ujian berjalan: <strong id="testElapsed">00:00.000</strong></div></div><div class="livebadge"><span class="livepulse"></span> LIVE</div></div>
- <div class="netlive"><div><span class="muted">Status internet</span><strong id="netState">Menyemak…</strong></div><div><span class="muted">Jenis rangkaian</span><strong id="netType">—</strong></div><div><span class="muted">Anggaran browser</span><strong id="netDownlink">—</strong></div></div><div class="wsheading"><strong>WebSocket Realtime</strong><span id="wsState" class="wsstate">Belum disambungkan</span></div>
- <label class="wslabel" for="wsUrl">Alamat endpoint WebSocket</label>
- <input id="wsUrl" class="wsinput" type="url" inputmode="url" placeholder="wss://server-anda.example/ws" autocomplete="url" spellcheck="false">
- <div class="wsbuttons"><button id="wsConnect" class="wsbutton primary">Sambung</button><button id="wsDisconnect" class="wsbutton" disabled>Putuskan</button></div>
- <div class="wsinfo" id="wsInfo">Endpoint belum diberikan. Masukkan alamat wss:// pelayan anda untuk mengaktifkan sambungan sebenar.</div>
- <div class="wsstats"><div><span class="muted">RTT WebSocket</span><strong id="wsRtt">— ms</strong></div><div><span class="muted">Mesej diterima</span><strong id="wsMessages">0</strong></div><div><span class="muted">Aktiviti terakhir</span><strong id="wsLast">—</strong></div></div>
- <p class="wsnote">WebSocket memerlukan pelayan yang menyokong protokol mesej. AI-FUSION menghantar {"type":"ping","timestamp":...}; untuk mengukur RTT, pelayan perlu membalas {"type":"pong","timestamp":...}. Jam terus berfungsi tanpa pelayan.</p>
-</section></section></main>
-<footer>AI-FUSION Speed Test · UI 1.0 · Keputusan ialah anggaran dan bukan jaminan kelajuan ISP.</footer>
-<script type="module">
-import SpeedTest from 'https://esm.sh/@cloudflare/speedtest';
-const $=id=>document.getElementById(id);let running=false,engine=null;
-function setGauge(v){const angle=Math.max(0,Math.min(280,(Math.log10(Math.max(v,.1)+1)/Math.log10(1001))*280));$('gauge').style.setProperty('--angle',angle+'deg')}
-function showMetric(id,v,unit){$(id).innerHTML=(Number.isFinite(v)&&v>=0?(v<10?v.toFixed(2):v.toFixed(1)):'—')+' <span class="unit-small">'+unit+'</span>'}
-let testStartedAt=0,testClockTimer=null;function finishUI(){running=false;clearInterval(testClockTimer);$('start').disabled=false;$('start').textContent='Uji Semula'}
-function fail(message){$('phase').textContent='RALAT';$('status').textContent='Ujian gagal: '+message;$('server').textContent='Pelayan ujian: Cloudflare';finishUI()}
-$('start').addEventListener('click',()=>{
- if(running)return;
- running=true;testStartedAt=performance.now();clearInterval(testClockTimer);testClockTimer=setInterval(()=>{const ms=performance.now()-testStartedAt;$('testElapsed').textContent=String(Math.floor(ms/60000)).padStart(2,'0')+':'+String(Math.floor(ms/1000)%60).padStart(2,'0')+'.'+String(Math.floor(ms%1000)).padStart(3,'0')},50);$('start').disabled=true;$('start').textContent='Sedang menguji…';$('phase').textContent='LATENSI';$('current').textContent='…';$('currentUnit').textContent='Mbps';$('status').textContent='Memulakan enjin pengukuran Cloudflare…';$('server').textContent='Pelayan ujian: Cloudflare';
- try{
-  engine=new SpeedTest({autoStart:false,measureDownloadLoadedLatency:true,measureUploadLoadedLatency:true,measurements:[
-   {type:'latency',numPackets:7},
-   {type:'download',bytes:1000000,count:2},
-   {type:'download',bytes:10000000,count:2},
-   {type:'download',bytes:25000000,count:1},
-   {type:'upload',bytes:1000000,count:2},
-   {type:'upload',bytes:10000000,count:1}
-  ]});
-  engine.onResultsChange=event=>{
-   const type=event&&event.type||'';
-   if(type==='latency'){$('phase').textContent='LATENSI';$('status').textContent='Mengukur latensi menggunakan bacaan berulang…'}
-   else if(type==='download'){$('phase').textContent='DOWNLOAD';$('status').textContent='Mengukur download dengan saiz data berbeza…'}
-   else if(type==='upload'){$('phase').textContent='UPLOAD';$('status').textContent='Mengukur upload dengan saiz data berbeza…'}
-   try{const d=engine.results.getDownloadBandwidth()/1e6;if(Number.isFinite(d)&&d>0){$('current').textContent=d.toFixed(1);setGauge(d)}}catch{}
-  };
-  engine.onFinish=results=>{
-   const latency=results.getUnloadedLatency();
-   const down=results.getDownloadBandwidth()/1e6;
-   const up=results.getUploadBandwidth()/1e6;
-   showMetric('ping',latency,'ms');showMetric('download',down,'Mbps');showMetric('upload',up,'Mbps');
-   $('phase').textContent='SIAP';$('current').textContent=Number.isFinite(down)?down.toFixed(1):'—';$('currentUnit').textContent='Mbps';if(Number.isFinite(down))setGauge(down);
-   $('status').textContent='Ujian selesai menggunakan enjin rasmi Cloudflare. Masa sebenar bergantung pada rangkaian.';
-   finishUI();
-  };
-  engine.onError=err=>fail(typeof err==='string'?err:'Sambungan ke pelayan ujian terganggu.');
-  engine.play();
- }catch(e){fail(e&&e.message?e.message:'Tidak dapat memulakan enjin ujian.')}
-});
-
-const clockFormatter=new Intl.DateTimeFormat('ms-MY',{timeZone:'Asia/Kuala_Lumpur',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
-const dateFormatter=new Intl.DateTimeFormat('ms-MY',{timeZone:'Asia/Kuala_Lumpur',weekday:'long',day:'numeric',month:'long',year:'numeric'});
-function tickClock(){const now=new Date();$('clock').textContent=clockFormatter.format(now)+'.'+String(now.getMilliseconds()).padStart(3,'0');$('date').textContent=dateFormatter.format(now)}
-tickClock();setInterval(tickClock,50);
-function updateNetwork(){const online=navigator.onLine;$('netState').textContent=online?'Dalam talian':'Luar talian';$('netState').style.color=online?'var(--green)':'#ff7c87';const n=navigator.connection||navigator.mozConnection||navigator.webkitConnection;if(n){$('netType').textContent=[n.type,n.effectiveType].filter(Boolean).join(' / ')||'Tidak diketahui';$('netDownlink').textContent=Number.isFinite(n.downlink)?n.downlink+' Mbps (anggaran)':'Tidak disediakan'}else{$('netType').textContent='Tidak disediakan';$('netDownlink').textContent='Tidak disediakan'}}updateNetwork();window.addEventListener('online',updateNetwork);window.addEventListener('offline',updateNetwork);if(navigator.connection)navigator.connection.addEventListener('change',updateNetwork);
-let ws=null,wsTimer=null,wsStart=null,wsCount=0,manualClose=false,wsReconnectTimer=null,retryDelay=1000;
-function wsStatus(text){$('wsState').textContent=text}
-function disconnectWS(manual=true){manualClose=manual;clearInterval(wsTimer);clearTimeout(wsReconnectTimer);if(ws&&ws.readyState<2){try{ws.close(1000,manual?'User disconnect':'Reconnect')}catch{}}ws=null;$('wsConnect').disabled=false;$('wsDisconnect').disabled=true;if(manual)wsStatus('Terputus')}
-function connectWS(){
- const endpoint=$('wsUrl').value.trim();
- if(!endpoint){$('wsInfo').textContent='Sila masukkan endpoint WebSocket. Gunakan wss:// untuk pelayan selamat yang dihos pada HTTPS.';return}
- let parsed;try{parsed=new URL(endpoint)}catch{$('wsInfo').textContent='Alamat tidak sah. Contoh: wss://domain-anda/ws';return}
- if(!['wss:','ws:'].includes(parsed.protocol)){$('wsInfo').textContent='Endpoint mesti menggunakan ws:// atau wss://.';return}
- if(location.protocol==='https:'&&parsed.protocol==='ws:'){$('wsInfo').textContent='Laman ini menggunakan HTTPS; pelayar biasanya menyekat ws://. Gunakan endpoint wss://.';return}
- disconnectWS(false);manualClose=false;$('wsConnect').disabled=true;$('wsDisconnect').disabled=false;wsStatus('Menyambung…');$('wsInfo').textContent='Mencuba sambungan ke '+endpoint;
- try{
-  ws=new WebSocket(endpoint);
-  ws.onopen=()=>{retryDelay=1000;wsStatus('Bersambung');$('wsInfo').textContent='WebSocket aktif. Menghantar heartbeat setiap 2 saat; pelayan perlu membalas pong untuk RTT.';sendWSPing();clearInterval(wsTimer);wsTimer=setInterval(sendWSPing,2000)};
-  ws.onmessage=event=>{wsCount++;$('wsMessages').textContent=String(wsCount);$('wsLast').textContent=clockFormatter.format(new Date());let data;try{data=JSON.parse(event.data)}catch{data=null}
-   if(data&&data.type==='pong'&&Number.isFinite(Number(data.timestamp))){const rtt=Math.max(0,Date.now()-Number(data.timestamp));$('wsRtt').textContent=rtt.toFixed(0)+' ms';}
-   else if(data&&data.type==='ping'&&data.timestamp!==undefined){try{ws.send(JSON.stringify({type:'pong',timestamp:data.timestamp,serverTime:Date.now()}))}catch{}}
-   else if(data&&Number.isFinite(Number(data.rttMs))){$('wsRtt').textContent=Number(data.rttMs).toFixed(0)+' ms'}
-   $('wsInfo').textContent='Mesej diterima: '+(typeof event.data==='string'?event.data.slice(0,180):'[data binari]');
-  };
-  ws.onerror=()=>{$('wsInfo').textContent='Sambungan WebSocket gagal. Semak endpoint, TLS, CORS bukan punca utama WebSocket, dan log pelayan.';wsStatus('Ralat')};
-  ws.onclose=()=>{clearInterval(wsTimer);$('wsConnect').disabled=false;$('wsDisconnect').disabled=true;ws=null;wsStatus('Terputus');if(!manualClose){$('wsInfo').textContent='Sambungan terputus. Cuba sambung semula dalam '+Math.round(retryDelay/1000)+' saat…';wsReconnectTimer=setTimeout(()=>{retryDelay=Math.min(retryDelay*2,30000);connectWS()},retryDelay)}};
- }catch(e){$('wsInfo').textContent='Tidak dapat memulakan WebSocket: '+e.message;wsStatus('Ralat');$('wsConnect').disabled=false;$('wsDisconnect').disabled=true}
-}
-function sendWSPing(){if(!ws||ws.readyState!==WebSocket.OPEN)return;wsStart=Date.now();try{ws.send(JSON.stringify({type:'ping',timestamp:wsStart,client:'AI-FUSION-Speed-Test'}))}catch{}}
-$('wsConnect').addEventListener('click',connectWS);
-$('wsDisconnect').addEventListener('click',()=>disconnectWS(true));
-$('wsUrl').addEventListener('keydown',e=>{if(e.key==='Enter')connectWS()});
-</script></body></html>
+<header><div class="wrap nav"><a class="brand" href="#" aria-label="AI-FUSION Downloader home"><span class="logo">F</span><span>AI-FUSION<small>VIDEO DOWNLOADER</small></span></a><nav class="navlinks"><a href="#cara-guna">Cara guna</a><a href="#faq">Soalan lazim</a><a class="navpill" href="#muat-turun">Mula sekarang</a></nav></div></header>
+<main>
+<section class="hero" id="muat-turun"><div class="wrap">
+<div class="eyebrow"><span class="eyedot"></span> MUDAH · PANTAS · MESRA TELEFON</div>
+<h1>Simpan video kegemaran<br><span>dengan mudah.</span></h1>
+<p class="sub">Tampal pautan video TikTok di bawah untuk bermula. Antara muka ringkas, direka supaya selesa digunakan pada telefon atau komputer.</p>
+<form class="download-card" id="downloadForm">
+<span class="linkicon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.07 0l3-3A5 5 0 0 0 13 2.93l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3A5 5 0 0 0 11 21.07l1.71-1.71"/></svg></span>
+<input class="urlinput" id="videoUrl" type="url" inputmode="url" placeholder="Tampal pautan TikTok di sini…" aria-label="Pautan video TikTok" required>
+<button class="paste" id="pasteBtn" type="button">Tampal</button>
+<button class="go" type="submit">Sediakan pautan →</button>
+</form>
+<div class="privacy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Gunakan pautan awam yang anda dibenarkan simpan.</div>
+<div class="result" id="result" role="status" aria-live="polite"></div>
+<div class="features">
+<div class="feature"><span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m10 9 5 3-5 3z"/></svg></span><div><b>Aliran kerja ringkas</b><p>Tampal pautan dan semak sebelum meneruskan.</p></div></div>
+<div class="feature"><span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m-5-5 5 5 5-5"/><path d="M5 17v3h14v-3"/></svg></span><div><b>Mesra telefon</b><p>Reka bentuk responsif untuk skrin kecil dan besar.</p></div></div>
+<div class="feature"><span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/><path d="m9 12 2 2 4-4"/></svg></span><div><b>Lebih jelas</b><p>Status akan menerangkan langkah seterusnya tanpa keputusan palsu.</p></div></div>
+</div>
+</div></section>
+<section class="section soft" id="cara-guna"><div class="wrap"><div class="section-head"><h2>Cara menggunakan</h2><p>Tiga langkah mudah untuk bermula.</p></div><div class="steps">
+<article class="step"><div class="stepnum">01</div><h3>Salin pautan video</h3><p>Buka video TikTok yang anda mahu simpan dan salin pautannya melalui fungsi kongsi.</p></article>
+<article class="step"><div class="stepnum">02</div><h3>Tampal di sini</h3><p>Tampal pautan ke ruangan di atas. AI-FUSION akan menyemak format pautan terlebih dahulu.</p></article>
+<article class="step"><div class="stepnum">03</div><h3>Sambungkan enjin muat turun</h3><p>Untuk mendapatkan fail video sebenar, laman ini memerlukan API atau backend muat turun yang aktif.</p></article>
+</div></div></section>
+<section class="section" id="faq"><div class="wrap"><div class="section-head"><h2>Soalan lazim</h2><p>Maklumat ringkas tentang laman ini.</p></div><div class="faq">
+<details><summary>Adakah muat turun sudah berfungsi?</summary><p>Buat masa ini, laman statik ini mempunyai antaramuka dan semakan pautan sahaja. Enjin backend/API belum disambungkan, jadi ia belum boleh mengambil atau menghasilkan fail video.</p></details>
+<details><summary>Kenapa perlu backend?</summary><p>GitHub Pages hanya menghos fail statik. Pemprosesan pautan video memerlukan servis yang menyokong permintaan tersebut; jangan letakkan kunci API rahsia di dalam kod browser.</p></details>
+<details><summary>Bolehkah saya guna pada telefon?</summary><p>Ya, antaramuka ini direka responsif untuk telefon dan komputer. Sambungan internet diperlukan untuk menggunakan servis luar apabila enjin muat turun disediakan.</p></details>
+<details><summary>Adakah saya boleh menyimpan semua video?</summary><p>Simpan hanya kandungan yang anda miliki atau mempunyai kebenaran untuk memuat turun. Hormati privasi pencipta dan syarat platform.</p></details>
+</div></div></section>
+</main>
+<footer><div class="wrap foot"><div><div class="footbrand">AI-FUSION Downloader</div><div>Alat web komuniti · Versi UI 2.0</div></div><div>Gunakan secara bertanggungjawab. Hormati hak cipta pencipta kandungan.</div></div></footer>
+<script>
+const form=document.getElementById('downloadForm'),input=document.getElementById('videoUrl'),result=document.getElementById('result'),pasteBtn=document.getElementById('pasteBtn');
+function showResult(title,message,error=false){result.className='result show'+(error?' error':'');result.replaceChildren();const strong=document.createElement('strong');strong.textContent=title;const p=document.createElement('div');p.textContent=message;result.append(strong,p)}
+pasteBtn.addEventListener('click',async()=>{try{if(!navigator.clipboard||!navigator.clipboard.readText)throw new Error('');const text=await navigator.clipboard.readText();if(!text.trim())throw new Error('');input.value=text.trim();input.focus();showResult('Pautan ditampal','Semak pautan, kemudian tekan “Sediakan pautan”.')}catch{input.focus();showResult('Tidak dapat membaca papan klip','Benarkan akses papan klip atau tampal pautan secara manual.',true)}});
+form.addEventListener('submit',e=>{e.preventDefault();let url;try{url=new URL(input.value.trim())}catch{showResult('Pautan tidak sah','Masukkan pautan video penuh yang bermula dengan https://.',true);return}
+const host=url.hostname.toLowerCase().replace(/^www\./,'');const allowed=host==='tiktok.com'||host.endsWith('.tiktok.com')||host==='vm.tiktok.com'||host==='vt.tiktok.com';
+if(url.protocol!=='https:'||!allowed){showResult('Pautan TikTok tidak dikenal pasti','Sila masukkan pautan https:// daripada tiktok.com.',true);return}
+showResult('Pautan berjaya disemak','Format pautan kelihatan sah. Enjin muat turun belum disambungkan pada laman ini; tiada fail dijana lagi. Langkah seterusnya ialah menghubungkan backend/API yang sah.')});
+</script>
+</body>
+</html>
