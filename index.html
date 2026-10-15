@@ -28,7 +28,7 @@ footer{border-top:1px solid var(--line);padding:25px 0 30px;color:var(--muted);f
 <span class="linkicon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.07 0l3-3A5 5 0 0 0 13 2.93l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3A5 5 0 0 0 11 21.07l1.71-1.71"/></svg></span>
 <input class="urlinput" id="videoUrl" type="url" inputmode="url" placeholder="Tampal pautan TikTok di sini…" aria-label="Pautan video TikTok" required>
 <button class="paste" id="pasteBtn" type="button">Tampal</button>
-<button class="go" type="submit">Sediakan pautan →</button>
+<button class="go" type="submit">Muat turun video ↓</button>
 </form>
 <div class="privacy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Gunakan pautan awam yang anda dibenarkan simpan.</div>
 <div class="result" id="result" role="status" aria-live="polite"></div>
@@ -41,24 +41,28 @@ footer{border-top:1px solid var(--line);padding:25px 0 30px;color:var(--muted);f
 <section class="section soft" id="cara-guna"><div class="wrap"><div class="section-head"><h2>Cara menggunakan</h2><p>Tiga langkah mudah untuk bermula.</p></div><div class="steps">
 <article class="step"><div class="stepnum">01</div><h3>Salin pautan video</h3><p>Buka video TikTok yang anda mahu simpan dan salin pautannya melalui fungsi kongsi.</p></article>
 <article class="step"><div class="stepnum">02</div><h3>Tampal di sini</h3><p>Tampal pautan ke ruangan di atas. TokSave akan menyemak format pautan terlebih dahulu.</p></article>
-<article class="step"><div class="stepnum">03</div><h3>Sambungkan enjin muat turun</h3><p>Untuk mendapatkan fail video sebenar, laman ini memerlukan API atau backend muat turun yang aktif.</p></article>
+<article class="step"><div class="stepnum">03</div><h3>Muat turun video</h3><p>TokSave menghantar pautan ke backend untuk memproses dan memulangkan fail video.</p></article>
 </div></div></section>
 <section class="section" id="faq"><div class="wrap"><div class="section-head"><h2>Soalan lazim</h2><p>Maklumat ringkas tentang laman ini.</p></div><div class="faq">
-<details><summary>Adakah muat turun sudah berfungsi?</summary><p>Buat masa ini, laman statik ini mempunyai antaramuka dan semakan pautan sahaja. Enjin backend/API belum disambungkan, jadi ia belum boleh mengambil atau menghasilkan fail video.</p></details>
-<details><summary>Kenapa perlu backend?</summary><p>GitHub Pages hanya menghos fail statik. Pemprosesan pautan video memerlukan servis yang menyokong permintaan tersebut; jangan letakkan kunci API rahsia di dalam kod browser.</p></details>
+<details><summary>Adakah muat turun sudah berfungsi?</summary><p>Enjin backend kini tersedia dalam folder backend. Selepas servis backend dihoskan dan URL API dimasukkan ke dalam API_BASE di index.html, butang muat turun akan memproses video. Hosting GitHub Pages sahaja tidak menjalankan backend.</p></details>
+<details><summary>Kenapa perlu backend?</summary><p>Pemprosesan video berjalan pada servis backend berasingan. Jangan letakkan kunci rahsia di dalam kod browser.</p></details>
 <details><summary>Bolehkah saya guna pada telefon?</summary><p>Ya, antaramuka ini direka responsif untuk telefon dan komputer. Sambungan internet diperlukan untuk menggunakan servis luar apabila enjin muat turun disediakan.</p></details>
 <details><summary>Adakah saya boleh menyimpan semua video?</summary><p>Simpan hanya kandungan yang anda miliki atau mempunyai kebenaran untuk memuat turun. Hormati privasi pencipta dan syarat platform.</p></details>
 </div></div></section>
 </main>
-<footer><div class="wrap foot"><div><div class="footbrand">TokSave</div><div>Alat web komuniti · Versi UI 2.0</div></div><div>Gunakan secara bertanggungjawab. Hormati hak cipta pencipta kandungan.</div></div></footer>
+<footer><div class="wrap foot"><div><div class="footbrand">TokSave</div><div>Alat web komuniti · TokSave Download Engine</div></div><div>Gunakan secara bertanggungjawab. Hormati hak cipta pencipta kandungan.</div></div></footer>
 <script>
-const form=document.getElementById('downloadForm'),input=document.getElementById('videoUrl'),result=document.getElementById('result'),pasteBtn=document.getElementById('pasteBtn');
+const API_BASE = ''; // Selepas deploy backend, isi URL servis di sini, contoh: https://toksave-engine.onrender.com
+const form=document.getElementById('downloadForm'),input=document.getElementById('videoUrl'),result=document.getElementById('result'),pasteBtn=document.getElementById('pasteBtn'),goBtn=form.querySelector('.go');
 function showResult(title,message,error=false){result.className='result show'+(error?' error':'');result.replaceChildren();const strong=document.createElement('strong');strong.textContent=title;const p=document.createElement('div');p.textContent=message;result.append(strong,p)}
-pasteBtn.addEventListener('click',async()=>{try{if(!navigator.clipboard||!navigator.clipboard.readText)throw new Error('');const text=await navigator.clipboard.readText();if(!text.trim())throw new Error('');input.value=text.trim();input.focus();showResult('Pautan ditampal','Semak pautan, kemudian tekan “Sediakan pautan”.')}catch{input.focus();showResult('Tidak dapat membaca papan klip','Benarkan akses papan klip atau tampal pautan secara manual.',true)}});
-form.addEventListener('submit',e=>{e.preventDefault();let url;try{url=new URL(input.value.trim())}catch{showResult('Pautan tidak sah','Masukkan pautan video penuh yang bermula dengan https://.',true);return}
-const host=url.hostname.toLowerCase().replace(/^www\./,'');const allowed=host==='tiktok.com'||host.endsWith('.tiktok.com')||host==='vm.tiktok.com'||host==='vt.tiktok.com';
-if(url.protocol!=='https:'||!allowed){showResult('Pautan TikTok tidak dikenal pasti','Sila masukkan pautan https:// daripada tiktok.com.',true);return}
-showResult('Pautan berjaya disemak','Format pautan kelihatan sah. Enjin muat turun belum disambungkan pada laman ini; tiada fail dijana lagi. Langkah seterusnya ialah menghubungkan backend/API yang sah.')});
+function isTikTokUrl(value){try{const u=new URL(value);const h=u.hostname.toLowerCase().replace(/^www\./,'');return u.protocol==='https:'&&(h==='tiktok.com'||h.endsWith('.tiktok.com'))}catch{return false}}
+pasteBtn.addEventListener('click',async()=>{try{if(!navigator.clipboard||!navigator.clipboard.readText)throw new Error('');const text=await navigator.clipboard.readText();if(!text.trim())throw new Error('');input.value=text.trim();input.focus();showResult('Pautan ditampal','Tekan “Muat turun video” untuk memproses pautan.')}catch{input.focus();showResult('Tidak dapat membaca papan klip','Benarkan akses papan klip atau tampal pautan secara manual.',true)}});
+form.addEventListener('submit',async e=>{e.preventDefault();const url=input.value.trim();if(!isTikTokUrl(url)){showResult('Pautan tidak sah','Masukkan pautan HTTPS daripada tiktok.com.',true);return}
+if(!API_BASE){showResult('Enjin sudah disediakan dalam repo','Backend telah ditambah, tetapi perlu deploy servis backend dan isi URL API_BASE dalam index.html sebelum muat turun boleh berfungsi.',true);return}
+goBtn.disabled=true;goBtn.textContent='Memproses…';showResult('Sedang memproses video','TokSave sedang meminta enjin menyediakan fail. Jangan tutup halaman.');
+try{const base=API_BASE.endsWith('/')?API_BASE.slice(0,-1):API_BASE;const response=await fetch(base+'/api/download',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url})});if(!response.ok){let message='Enjin tidak dapat memproses video ini.';try{const data=await response.json();if(data.detail)message=data.detail}catch{}throw new Error(message)}
+const blob=await response.blob();if(!blob.size)throw new Error('Fail kosong diterima. Cuba lagi.');const disposition=response.headers.get('content-disposition')||'';const match=disposition.match(/filename="?([^";]+)"?/i);const filename=match?match[1]:'toksave-video.mp4';const objectUrl=URL.createObjectURL(blob);const a=document.createElement('a');a.href=objectUrl;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(objectUrl),30000);showResult('Muat turun dimulakan','Fail video telah dihantar oleh enjin. Semak folder Downloads pada peranti anda.')
+}catch(err){showResult('Muat turun gagal',err.message||'Semak sambungan internet atau cuba pautan video awam yang lain.',true)}finally{goBtn.disabled=false;goBtn.textContent='Muat turun video ↓'}});
 </script>
 </body>
 </html>
