@@ -1,19 +1,25 @@
 # TokSave
 
-A lightweight, mobile-friendly TikTok link checker and downloader interface.
+A lightweight, mobile-friendly TikTok downloader interface with a separate Python download engine.
 
-## Current features
-- Responsive white-and-green layout
-- Paste a public TikTok link and validate its URL format
-- Simple usage instructions and FAQ
+## Features
+- Responsive mobile-first UI
+- Paste and validate HTTPS TikTok URLs
+- Backend API built with FastAPI and yt-dlp
+- `/health`, `/api/resolve`, and `/api/download` endpoints
+- Render deployment blueprint at `render.yaml`
 
-## Important
-This repository currently contains a static frontend. Actual video processing and file downloads are **not enabled yet**; a suitable backend/API must be connected before the page can retrieve video files. Do not put private API keys in browser-side code.
+## Deploy the download engine
+GitHub Pages hosts only the static frontend; it cannot run the Python engine.
 
-## Publish with GitHub Pages
-1. Open **Settings → Pages**.
-2. Select **GitHub Actions** as the build and deployment source.
-3. Open **Actions → Deploy to GitHub Pages** and confirm the workflow succeeds.
-4. The usual project site URL is `https://badru827i.github.io/TokSave/`.
+1. In Render, create a new Blueprint and select this repository. Render will read `render.yaml` and create the `toksave-engine` service.
+2. After deployment, open the service URL and confirm `/health` returns JSON with `"ok": true`.
+3. Edit `index.html` and set `API_BASE` near the bottom to the full backend URL, for example `https://your-service.onrender.com` (no trailing slash required).
+4. Commit the change and wait for GitHub Pages to redeploy.
+5. Test with a public video URL you have permission to save.
 
-Only download content you own or have permission to save, and respect creators' rights and platform terms.
+## Notes
+- The backend is code-complete but is **not deployed or connected automatically** by this repository change. Downloads will not work on the public page until steps above are completed.
+- Free hosting may sleep between requests, and TikTok may change or restrict video extraction. This engine cannot guarantee every video will be downloadable.
+- Do not add private API keys to `index.html`. Set `ALLOWED_ORIGINS` to the exact frontend origin if your published domain differs.
+- Only save content you own or have permission to download, and respect creators' rights and platform terms.
